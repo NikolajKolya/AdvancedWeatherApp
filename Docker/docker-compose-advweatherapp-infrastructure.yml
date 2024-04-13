@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  # PostgreSQL
+  advweatherapp-postgresql:
+    image: advweatherapp-infrastructure-postgres
+    container_name: advweatherapp-postgresql
+    restart: always
+
+    ports:
+      - 127.0.0.1:5433:5432 # Do not need it in Prod
+
+    environment:
+      POSTGRES_PASSWORD: 7IoX80ggKRhJbLWoDIlde6M1frSQ5b
+
+    volumes:
+      - advweatherapp_postgresql_data:/var/lib/postgresql/data
+
+    networks:
+      - advweatherapp-net
+
+  # Adminer
+  advweatherapp-adminer:
+    image: adminer
+    container_name: advweatherapp-adminer
+    restart: always
+
+    ports:
+      - 127.0.0.1:9082:8080
+
+    networks:
+      - advweatherapp-net
+
+volumes:
+
+  # Advanced weather app postgresql database storage
+  advweatherapp_postgresql_data:
+
+networks:
+  advweatherapp-net:
+    driver: bridge
+    external: true
