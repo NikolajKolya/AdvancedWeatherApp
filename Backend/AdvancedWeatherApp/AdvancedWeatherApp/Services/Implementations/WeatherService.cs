@@ -42,7 +42,7 @@ public class WeatherService: IWeatherService
                 } 
                 break;/*
             case WeatherTypeEnum.LastWeather:
-                */
+                **/
         }
         return new List<Weather>()
         {
