@@ -12,6 +12,7 @@ public class WeatherMapper: IWeatherMapper
         {
             Id = weatherDbo.Id,
             Temperature = weatherDbo.Temperature,
+            DateTimeStamp = weatherDbo.DateTimeStamp,
             Humidity = weatherDbo.Humidity,
             Pressure = weatherDbo.Pressure 
         };
@@ -23,6 +24,7 @@ public class WeatherMapper: IWeatherMapper
         {
             Id = weather.Id,
             Temperature = weather.Temperature,
+            DateTimeStamp = weather.DateTimeStamp,
             Humidity = weather.Humidity,
             Pressure = weather.Pressure
         };
@@ -30,11 +32,11 @@ public class WeatherMapper: IWeatherMapper
 
     public IReadOnlyCollection<WeatherDbo> Map(IReadOnlyCollection<Weather> weathers)
     {
-        return weathers.Select(w => Map(w)).ToList();
+        return weathers.Select(Map).ToList();
     }
 
     public IReadOnlyCollection<Weather> Map(IReadOnlyCollection<WeatherDbo> weathersDao)
     {
-        return weathersDao.Select(w => Map(w)).ToList();
+        return weathersDao.Select(Map).ToList();
     }
 }

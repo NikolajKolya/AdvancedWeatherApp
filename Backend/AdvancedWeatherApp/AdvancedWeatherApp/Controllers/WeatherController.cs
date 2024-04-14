@@ -18,26 +18,12 @@ public class WeatherController : ControllerBase
     {
         _weatherService = weatherService;
     }
-    
-    [Route("api/Weather/GetCurrentDateTime")]
+
+    [Route("api/Weather/{forecastPeriod}")]
     [HttpGet]
-    public async Task<ActionResult<DateTime>> GetCurrentDateTimeAsync()
+    public async Task<WeatherResponse> WeatherOnData(WeatherTypeEnum forecastPeriod)
     {
-        return Ok(DateTime.UtcNow);
-    }
-    
-    [Route("api/Weather/PlusOne/{varToAdd}")]
-    [HttpGet]
-    public async Task<ActionResult<int>> PlusOneAsync(int varToAdd)
-    {
-        return Ok(varToAdd + 1);
-    }
-    
-    [Route("api/Weather/{weatherPeriod}")]
-    [HttpGet]
-    public async Task<WeatherResponse> WeatherOnData(WeatherTypeEnum weatherPeriod)
-    {
-         IReadOnlyCollection<Weather> weathers = await _weatherService.GetWeather(weatherPeriod);
+         IReadOnlyCollection<Weather> weathers = await _weatherService.GetWeather(forecastPeriod);
          
          return new WeatherResponse(weathers);
     }

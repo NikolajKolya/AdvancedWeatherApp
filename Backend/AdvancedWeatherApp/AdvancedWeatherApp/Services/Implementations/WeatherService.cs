@@ -1,4 +1,5 @@
-﻿using AdvancedWeatherApp.DAO.Abstract;
+﻿using System.Linq.Expressions;
+using AdvancedWeatherApp.DAO.Abstract;
 using AdvancedWeatherApp.DAO.Implementations;
 using AdvancedWeatherApp.Mappers.Abstract;
 using AdvancedWeatherApp.Models;
@@ -19,6 +20,7 @@ public class WeatherService: IWeatherService
         _weatherDao = weatherDao;
         _weatherMapper = weatherMapper;
     }
+
     public async Task<IReadOnlyCollection<Weather>> GetWeather(WeatherTypeEnum weatherTypeEnum)
     {
         DateOnly dateTime;
@@ -27,39 +29,26 @@ public class WeatherService: IWeatherService
         {
             case WeatherTypeEnum.DailyWeather:
                 dateTime = DateOnly.FromDateTime(DateTime.UtcNow);
-                return new List<Weather>(){ _weatherMapper.Map(await _weatherDao.GetWeatherOnDateTime(dateTime))};
-                break;
+                return new List<Weather>() { _weatherMapper.Map(await _weatherDao.GetWeatherOnDateTime(dateTime)) };
+            
             case WeatherTypeEnum.WeatherTomorrow:
                 dateTime = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(1);
-                return new List<Weather>(){ _weatherMapper.Map(await _weatherDao.GetWeatherOnDateTime(dateTime))};
-                break;
+                return new List<Weather>() { _weatherMapper.Map(await _weatherDao.GetWeatherOnDateTime(dateTime)) };
+            
             case WeatherTypeEnum.WeeklyWeather:
                 var weathers = new List<Weather>();
                 for (int i = 0; i < 7; i++)
                 {
-                    dateTime = DateOnly.FromDateTime(DateTime.UtcNow ).AddDays(i);
+                    dateTime = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(i);
                     weathers.Add(_weatherMapper.Map(await _weatherDao.GetWeatherOnDateTime(dateTime)));
-                } 
-                break;/*
+                }
+
+                return weathers;
+            
             case WeatherTypeEnum.LastWeather:
-                **/
+                return new List<Weather>() { _weatherMapper.Map(await _weatherDao.GetLastWeather()) };
         }
-        return new List<Weather>()
-        {
-            new Weather()
-            {
-                Id = new Guid(),
-                Humidity = 40.53,
-                Pressure = 1325,
-                Temperature = 31
-            },
-            new Weather()
-            {
-                Id = new Guid(),
-                Humidity = 42.53,
-                Pressure = 1275,
-                Temperature = 27
-            }
-        };
+
+        throw new ArgumentException(nameof(weatherTypeEnum));
     }
 }

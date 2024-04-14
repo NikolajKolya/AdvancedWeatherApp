@@ -25,6 +25,14 @@ public class WeatherDao: IWeatherDao
             .SingleOrDefaultAsync();
     }
 
+    public async Task<WeatherDbo> GetLastWeather()
+    {
+        return await _dbContext
+            .Weathers
+            .OrderByDescending(w => w.DateTimeStamp)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<WeatherDbo> PostWeather(WeatherDbo weatherDbo)
     {
         _ = weatherDbo ?? throw new ArgumentNullException(nameof(weatherDbo), "Weather can not be null!");
