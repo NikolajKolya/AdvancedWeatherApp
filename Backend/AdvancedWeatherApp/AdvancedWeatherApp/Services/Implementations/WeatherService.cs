@@ -3,10 +3,9 @@ using AdvancedWeatherApp.DAO.Abstract;
 using AdvancedWeatherApp.DAO.Implementations;
 using AdvancedWeatherApp.Mappers.Abstract;
 using AdvancedWeatherApp.Models;
-using AdvancedWeatherApp.Models.Enums;
-using AdvancedWeatherApp.Models.Responses;
 using AdvancedWeatherApp.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using Weather = AdvancedWeatherApp.Models.BusinessLogic.Weather;
 
 namespace AdvancedWeatherApp.Services.Implementations;
 
@@ -14,41 +13,39 @@ public class WeatherService: IWeatherService
 {
     private IWeatherDao _weatherDao;
     private IWeatherMapper _weatherMapper;
-
+    
     public WeatherService(IWeatherDao weatherDao, IWeatherMapper weatherMapper)
     {
         _weatherDao = weatherDao;
         _weatherMapper = weatherMapper;
     }
 
-    public async Task<IReadOnlyCollection<Weather>> GetWeather(WeatherTypeEnum weatherTypeEnum)
+    public async Task<IReadOnlyCollection<Weather>> GetWeathersByIdsAsync(IReadOnlyCollection<Guid> ids)
     {
-        DateOnly dateTime;
+        _ = ids ?? throw new ArgumentNullException(nameof(ids), "IDs have to be provided!");
 
-        switch (weatherTypeEnum)
+        if (ids.Distinct().Count() != ids.Count)
         {
-            case WeatherTypeEnum.DailyWeather:
-                dateTime = DateOnly.FromDateTime(DateTime.UtcNow);
-                return new List<Weather>() { _weatherMapper.Map(await _weatherDao.GetWeatherOnDateTime(dateTime)) };
-            
-            case WeatherTypeEnum.WeatherTomorrow:
-                dateTime = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(1);
-                return new List<Weather>() { _weatherMapper.Map(await _weatherDao.GetWeatherOnDateTime(dateTime)) };
-            
-            case WeatherTypeEnum.WeeklyWeather:
-                var weathers = new List<Weather>();
-                for (int i = 0; i < 7; i++)
-                {
-                    dateTime = DateOnly.FromDateTime(DateTime.UtcNow).AddDays(i);
-                    weathers.Add(_weatherMapper.Map(await _weatherDao.GetWeatherOnDateTime(dateTime)));
-                }
-
-                return weathers;
-            
-            case WeatherTypeEnum.LastWeather:
-                return new List<Weather>() { _weatherMapper.Map(await _weatherDao.GetLastWeather()) };
+            throw new ArgumentException("Some IDs are repeating!", nameof(ids));
         }
 
-        throw new ArgumentException(nameof(weatherTypeEnum));
+        var result = _weatherMapper.Map(await _weatherDao.GetWeathersByIdsAsync(ids));
+
+        if (result.Count != ids.Count)
+        {
+            throw new ArgumentException("Some weathers aren't exist!", nameof(ids));
+        }
+
+        return result;
+    }
+
+    public async Task<Guid> GetLastWeatherIdAsync()
+    {
+        return await _weatherDao.GetLastWeatherIdAsync();
+    }
+
+    public async Task<IReadOnlyCollection<Guid>> GetAllWeathersIdsAsync()
+    {
+        return await _weatherDao.GetAllWeatherIdsAsync();
     }
 }

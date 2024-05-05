@@ -1,0 +1,112 @@
+// Define color variables
+@body-background-color: hsl(0, 37%, 97%); // Body background color
+@header-background-color: hsl(0, 0%, 30%); // Header background color
+@link-hover-background-color: #ddd; // Background color for Header links on hover
+@active-link-background-color: dodgerblue; // Background color for active Header link
+@weather-container-color: hsl(0, 20%, 20%);
+
+// Define dimension variables
+@footer-height: 2rem; // Footer height
+@icon-header-height: 2rem; // Icon height in the Header
+@header-height: 3.8rem; // Header height
+@header-padding: 0.3rem 1rem; // Padding for the Header
+@link-padding: 12px; // Padding for the Header links
+@link-border-radius: 4px; // Border radius for the Header links
+@logo-font-size: 25px; // Font size for the logo in the Header
+@footer-margin-bottom: 2rem; // Margin bottom for the Footer
+@loading-image-height: 4rem; // Height for the loading image
+
+// Global reset to remove default margins
+* {
+  margin: 0;
+}
+
+// Body styling
+body {
+  background-color: @body-background-color;
+}
+
+// Header styling
+.header {
+  overflow: hidden;
+  height: @header-height;
+  background-color: @header-background-color;
+  padding: @header-padding;
+  margin-bottom: 1rem;
+}
+
+// Icon styling in the Header
+.icon-on-header {
+  height: @icon-header-height;
+}
+
+// Header links styling
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: @link-padding;
+  text-decoration: none;
+  line-height: 25px;
+  border-radius: @link-border-radius;
+}
+
+// Logo link styling in the Header
+.header a.logo {
+  font-size: @logo-font-size;
+  font-weight: bold;
+  display: flex;
+}
+
+// Header link hover styling
+.header a:hover {
+  background-color: @link-hover-background-color;
+  color: black;
+  cursor: default;
+}
+
+// Active link styling in the Header
+.header a.active {
+  background-color: @active-link-background-color;
+  color: white;
+}
+
+// Header right section styling
+.header-right {
+  float: right;
+}
+
+// Responsive design for screen width 500px or less
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  .header-right {
+    float: none;
+  }
+}
+
+// Footer styling
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  height: @footer-height;
+  margin-bottom: @footer-margin-bottom;
+  padding-left: initial;
+  position: fixed;
+  bottom: 0;
+  width: 98%;
+}
+
+// Loading image styling
+.loading-image {
+  height: @loading-image-height;
+}
+
+.one-day-weather-container
+{
+  background-color: @weather-container-color;
+}

@@ -14,30 +14,37 @@ public class WeatherDao: IWeatherDao
     {
         _dbContext = dbContext;
     }
-    
-    public async Task<WeatherDbo> GetWeatherOnDateTime(DateOnly dateTime)
+
+    public async Task<IReadOnlyCollection<WeatherDbo>> GetWeathersByIdsAsync(IReadOnlyCollection<Guid> ids)
     {
         return await _dbContext
             .Weathers
-            .Where(w => DateOnly.FromDateTime(w.DateTimeStamp) == dateTime)
-            .OrderByDescending(w => w.DateTimeStamp)
-            .Take(1)
-            .SingleOrDefaultAsync();
+            .Where(w => ids.Any(id => id == w.Id))
+            .ToListAsync();
     }
 
-    public async Task<WeatherDbo> GetLastWeather()
+    public async Task<Guid> GetLastWeatherIdAsync()
     {
         return await _dbContext
             .Weathers
             .OrderByDescending(w => w.DateTimeStamp)
-            .FirstOrDefaultAsync();
+            .Select(w => w.Id)
+            .FirstAsync();
     }
 
-    public async Task<WeatherDbo> PostWeather(WeatherDbo weatherDbo)
+    public async Task<IReadOnlyCollection<Guid>> GetAllWeatherIdsAsync()
+    {
+        return await _dbContext
+            .Weathers
+            .Select(w => w.Id)
+            .ToListAsync();
+    }
+
+    public async Task<WeatherDbo> PostWeatherAsync(WeatherDbo weatherDbo)
     {
         _ = weatherDbo ?? throw new ArgumentNullException(nameof(weatherDbo), "Weather can not be null!");
 
-        _dbContext.Weathers.AddAsync(weatherDbo);
+        await _dbContext.Weathers.AddAsync(weatherDbo);
 
         await _dbContext.SaveChangesAsync();
 

@@ -1,16 +1,25 @@
 ﻿using AdvancedWeatherApp.DAO.DBO;
 using AdvancedWeatherApp.Models;
-using AdvancedWeatherApp.Models.Responses;
+using AdvancedWeatherApp.Models.Api.DTOs;
+using AdvancedWeatherApp.Models.BusinessLogic;
 
 namespace AdvancedWeatherApp.Mappers.Abstract;
 
 public interface IWeatherMapper
 {
-    public Weather Map(WeatherDbo weatherDto);
+    public Weather Map(WeatherDto weatherDto);
     
-    public WeatherDbo Map(Weather weather);
+    public Weather Map(WeatherDbo weatherDbo);
     
-    public IReadOnlyCollection<WeatherDbo> Map(IReadOnlyCollection<Weather> weathers);
+    public WeatherDto MapToDto(Weather weather);
+    
+    public WeatherDbo MapToDbo(Weather weather);
+    
+    public IReadOnlyCollection<WeatherDbo> MapToDbo(IReadOnlyCollection<Weather> weathers);
+    
+    public IReadOnlyCollection<WeatherDto> MapToDto(IReadOnlyCollection<Weather> weathers);
 
-    public IReadOnlyCollection<Weather> Map(IReadOnlyCollection<WeatherDbo> weathersDao);
+    public IReadOnlyCollection<Weather> Map(IReadOnlyCollection<WeatherDbo> weathersDbo);
+    
+    public IReadOnlyCollection<Weather> Map(IReadOnlyCollection<WeatherDto> weathersDto);
 }

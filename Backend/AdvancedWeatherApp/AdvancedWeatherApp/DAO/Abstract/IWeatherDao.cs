@@ -6,9 +6,36 @@ namespace AdvancedWeatherApp.DAO.Abstract;
 
 public interface IWeatherDao
 {
-    public Task<WeatherDbo> GetWeatherOnDateTime(DateOnly dateTime);
+    #region Get references
+    
+    /// <summary>
+    /// Get last weather ID
+    /// </summary>
+    public Task<Guid> GetLastWeatherIdAsync();
 
-    public Task<WeatherDbo> PostWeather(WeatherDbo weatherDbo);
+    /// <summary>
+    /// Get all weathers IDs
+    /// </summary>
+    public Task<IReadOnlyCollection<Guid>> GetAllWeatherIdsAsync();
+    
+    #endregion
 
-    public Task<WeatherDbo> GetLastWeather();
+    #region Add weathers
+
+    /// <summary>
+    /// Add weather to DB
+    /// </summary>
+    public Task<WeatherDbo> PostWeatherAsync(WeatherDbo weatherDbo);
+
+    #endregion
+
+    #region Get weathers
+
+    /// <summary>
+    /// Get weathers by IDs
+    /// </summary>
+    public Task<IReadOnlyCollection<WeatherDbo>> GetWeathersByIdsAsync(IReadOnlyCollection<Guid> ids);
+
+    #endregion
+    
 }
