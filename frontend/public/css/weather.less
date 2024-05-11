@@ -1,35 +1,33 @@
+@import "components/Common/common.less";
+@import "components/MainPage/one-day-weather-component.less";
+
 // Define color variables
 @body-background-color: hsl(0, 37%, 97%); // Body background color
 @header-background-color: hsl(0, 0%, 30%); // Header background color
 @link-hover-background-color: #ddd; // Background color for Header links on hover
 @active-link-background-color: dodgerblue; // Background color for active Header link
-@weather-container-color: hsl(0, 20%, 20%);
 
 // Define dimension variables
 @footer-height: 2rem; // Footer height
 @icon-header-height: 2rem; // Icon height in the Header
 @header-height: 3.8rem; // Header height
 @header-padding: 0.3rem 1rem; // Padding for the Header
-@link-padding: 12px; // Padding for the Header links
-@link-border-radius: 4px; // Border radius for the Header links
-@logo-font-size: 25px; // Font size for the logo in the Header
+@link-padding: 0.5rem; // Padding for the Header links
+@link-border-radius: 1rem; // Border radius for the Header links
+@logo-font-size: 2rem; // Font size for the logo in the Header
 @footer-margin-bottom: 2rem; // Margin bottom for the Footer
 @loading-image-height: 4rem; // Height for the loading image
-
-// Global reset to remove default margins
-* {
-  margin: 0;
-}
 
 // Body styling
 body {
   background-color: @body-background-color;
+
+  margin: auto;
 }
 
 // Header styling
 .header {
   overflow: hidden;
-  height: @header-height;
   background-color: @header-background-color;
   padding: @header-padding;
   margin-bottom: 1rem;
@@ -47,22 +45,26 @@ body {
   text-align: center;
   padding: @link-padding;
   text-decoration: none;
-  line-height: 25px;
+  line-height: 2rem;
   border-radius: @link-border-radius;
 }
 
 // Logo link styling in the Header
 .header a.logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: @flex-gap-smaller;
+
   font-size: @logo-font-size;
   font-weight: bold;
-  display: flex;
 }
 
 // Header link hover styling
 .header a:hover {
   background-color: @link-hover-background-color;
   color: black;
-  cursor: default;
 }
 
 // Active link styling in the Header
@@ -106,7 +108,12 @@ body {
   height: @loading-image-height;
 }
 
-.one-day-weather-container
-{
-  background-color: @weather-container-color;
+
+
+.weathers-list-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
 }

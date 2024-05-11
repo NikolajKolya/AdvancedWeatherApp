@@ -18,4 +18,6 @@ public interface IWeatherService
     /// Get all weathers IDs
     /// </summary>
     Task<IReadOnlyCollection<Guid>> GetAllWeathersIdsAsync();
+
+    Task AddNewWeatherAsync(Weather weather);
 }

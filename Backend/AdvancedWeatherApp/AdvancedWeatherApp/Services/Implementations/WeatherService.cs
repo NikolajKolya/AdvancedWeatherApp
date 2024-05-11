@@ -5,6 +5,7 @@ using AdvancedWeatherApp.Mappers.Abstract;
 using AdvancedWeatherApp.Models;
 using AdvancedWeatherApp.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Weather = AdvancedWeatherApp.Models.BusinessLogic.Weather;
 
 namespace AdvancedWeatherApp.Services.Implementations;
@@ -47,5 +48,10 @@ public class WeatherService: IWeatherService
     public async Task<IReadOnlyCollection<Guid>> GetAllWeathersIdsAsync()
     {
         return await _weatherDao.GetAllWeatherIdsAsync();
+    }
+
+    public async Task AddNewWeatherAsync(Weather weather)
+    {
+        await _weatherDao.PostWeatherAsync(_weatherMapper.MapToDbo(weather));
     }
 }

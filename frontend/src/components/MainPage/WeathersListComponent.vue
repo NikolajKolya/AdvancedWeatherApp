@@ -42,7 +42,8 @@ import OneDayWeatherComponent from "@/components/MainPage/OneDayWeatherComponent
       v-if="isLoading" />
 
   <div
-      v-if="!isLoading">
+      v-if="!isLoading"
+      class="weathers-list-container">
 
     <OneDayWeatherComponent
         v-for="weather in weathers"

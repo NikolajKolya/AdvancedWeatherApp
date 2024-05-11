@@ -85,6 +85,17 @@ public class WeatherController : ControllerBase
         }
     }
 
+    [HttpPost]
+    [Route("api/Weathers/Add/Weather")]
+    public async Task AddWeatherAsync([FromBody] AddWeatherRequest weather)
+    {
+        if (weather.Weather.Temperature == 0)
+        {
+            throw new ArgumentException();
+        }
+        await _weatherService.AddNewWeatherAsync(_weatherMapper.Map(weather.Weather));
+    }
+    
     /// <summary>
     /// Get all existing weathers references
     /// </summary>

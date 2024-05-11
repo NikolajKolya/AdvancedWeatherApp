@@ -1,0 +1,16 @@
+@import "../Common/common.less";
+
+@weather-container-color-even: hsl(0, 20%, 20%);
+@weather-container-color-odd: hsl(60, 20%, 20%);
+
+.one-day-weather-container
+{
+  background-color: @weather-container-color-even;
+  padding: @padding-normal;
+}
+
+.one-day-weather-container:nth-child(odd)
+{
+  background-color: @weather-container-color-odd;
+  padding: @padding-normal;
+}

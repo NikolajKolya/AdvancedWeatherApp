@@ -71,13 +71,13 @@ public class Weather
     /// </summary>
     public WeatherDto ToDto()
     {
-        return new WeatherDto()
-        {
-            Id = Id,
-            Timestamp = Timestamp,
-            Temperature = Temperature,
-            Pressure = Pressure,
-            Humidity = Humidity
-        };
+        return new WeatherDto
+        (
+            Id,
+            Timestamp,
+            Temperature,
+            Pressure,
+            Humidity
+        );
     }
 }

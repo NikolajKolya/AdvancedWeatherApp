@@ -1,5 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using AdvancedWeatherApp.Models.Api.DTOs;
+using AdvancedWeatherApp.Models.Api.Requests;
+using AdvancedWeatherApp.Models.BusinessLogic;
 
 namespace AdvancedWeatherApp.Models.Api.Responses;
 

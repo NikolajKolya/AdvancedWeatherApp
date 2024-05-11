@@ -21,4 +21,20 @@ public class WeatherDto
 	
     [JsonPropertyName("humidity")]
     public double Humidity { get; set; }
+
+    public WeatherDto
+    (
+        Guid id,
+        DateTime timestamp,
+        double temperature,
+        double pressure,
+        double humidity
+    )
+    {
+        Id = id;
+        Timestamp = timestamp;
+        Temperature = temperature;
+        Pressure = pressure;
+        Humidity = humidity;
+    }
 }

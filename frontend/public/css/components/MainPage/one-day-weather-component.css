@@ -1,0 +1,11 @@
+/* Flex gaps */
+/* Paddings */
+.one-day-weather-container {
+  background-color: hsl(0, 20%, 20%);
+  padding: 1rem;
+}
+.one-day-weather-container:nth-child(odd) {
+  background-color: hsl(60, 20%, 20%);
+  padding: 1rem;
+}
+/*# sourceMappingURL=one-day-weather-component.css.map */

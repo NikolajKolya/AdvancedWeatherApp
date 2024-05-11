@@ -34,14 +34,14 @@ public class WeatherMapper: IWeatherMapper
 
     public WeatherDto MapToDto(Weather weather)
     {
-        return new WeatherDto()
-        {
-            Id = weather.Id,
-            Temperature = weather.Temperature,
-            Timestamp = weather.Timestamp,
-            Humidity = weather.Humidity,
-            Pressure = weather.Pressure 
-        };
+        return new WeatherDto
+        (
+            weather.Id,
+            weather.Timestamp,
+            weather.Temperature,
+            weather.Pressure,
+            weather.Humidity
+        );
     }
 
     public WeatherDbo MapToDbo(Weather weather)
